@@ -9,7 +9,7 @@ const GoogleLogoutBtn = () => {
   const logoutHandler = () => {
     dispatch(AUTH_ACTIONS.updateToken(null))
     dispatch(AUTH_ACTIONS.updateUserInfo(null))
-    console.log("Logout successful")
+    // console.log("Logout successful")
   }
 
   return (

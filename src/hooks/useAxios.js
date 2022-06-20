@@ -39,14 +39,6 @@ const useAxios = () => {
           method: method ? method : null,
           url: api ? api : null,
           data: body ? body : null,
-          // headers: noAuth
-          //   ? {
-          //       Accept: "application/json",
-          //     }
-          //   : {
-          //       Accept: "application/json",
-          //       Authorization: `Bearer ${token}`,
-          //     },
           params: params ? params : null,
           timeout: 20000,
         })

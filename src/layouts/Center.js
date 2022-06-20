@@ -10,7 +10,6 @@ const Center = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        // border: "solid",
       }}
     >
       <Outlet />

@@ -12,12 +12,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material"
-import PageWrapper from "../components/PageWrapper"
-import GoogleLogoutBtn from "../components/GoogleLogoutBtn"
+import { Fragment, useState } from "react"
 import { useSelector } from "react-redux"
-import { Fragment, useEffect, useState } from "react"
-import useAxios from "../hooks/useAxios"
+import GoogleLogoutBtn from "../components/GoogleLogoutBtn"
+import PageWrapper from "../components/PageWrapper"
 import { DEBOUNCE_DELAY, SEARCH_API } from "../constants"
+import useAxios from "../hooks/useAxios"
 
 const Home = () => {
   const { user } = useSelector((state) => state.auth)
@@ -40,7 +40,6 @@ const Home = () => {
     }
 
     clearTimeout(searchTimeout)
-    // set_open_dropdown(false)
 
     searchTimeout = setTimeout(() => {
       searchRequest(
@@ -62,7 +61,7 @@ const Home = () => {
       return
     }
 
-    console.log("selection", selection)
+    // console.log("selection", selection)
     set_selection(selection)
     toggle_dialog_handler()
   }
@@ -82,16 +81,11 @@ const Home = () => {
             options={results}
             loading={searchIsLoading}
             loadingText="Searching..."
-            // isOptionEqualToValue={(option, value) => option.name === value.name}
             onChange={(e, new_value) => selectHandler(new_value)}
-            // onInputChange={(e, new_input_value) =>
-            //   searchHandler(new_input_value)
-            // }
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Search"
-                // value={user_input}
                 onChange={(e) => searchHandler(e.target.value)}
                 InputProps={{
                   ...params.InputProps,
