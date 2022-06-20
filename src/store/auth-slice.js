@@ -7,14 +7,11 @@ const authSlice = createSlice({
     user: null,
   },
   reducers: {
-    login(state, action) {
-      state.token = action.payload.token
+    updateToken(state, action) {
+      state.token = action.payload
     },
     updateUserInfo(state, action) {
       state.user = action.payload
-    },
-    logout(state) {
-      state.token = null
     },
   },
 })

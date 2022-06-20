@@ -1,10 +1,7 @@
 import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { BASE } from "../constants/api"
 import { AUTH_ACTIONS } from "../store/auth-slice"
-import { ERROR_ACTIONS } from "../store/error-slice"
-import { FILE_ACTIONS } from "../store/file-slice"
 
 const useAxios = () => {
   const dispatch = useDispatch()
@@ -24,7 +21,7 @@ const useAxios = () => {
   }, [requestConfig])
 
   const sendRequest = useCallback(
-    async ({ method, api, body, params, noAuth, isDownload }, applyData) => {
+    async ({ method, api, body, params, noAuth }, applyData) => {
       // for debugging purposes only
       setRequestConfig({
         method,
@@ -36,47 +33,26 @@ const useAxios = () => {
 
       setIsLoading(true)
 
-      dispatch(FILE_ACTIONS.updateLoading(true))
       try {
         const { data, status } = await axios({
-          baseURL: BASE,
+          // baseURL: BASE,
           method: method ? method : null,
           url: api ? api : null,
           data: body ? body : null,
-          headers: noAuth
-            ? {
-                Accept: "application/json",
-              }
-            : {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+          // headers: noAuth
+          //   ? {
+          //       Accept: "application/json",
+          //     }
+          //   : {
+          //       Accept: "application/json",
+          //       Authorization: `Bearer ${token}`,
+          //     },
           params: params ? params : null,
           timeout: 20000,
-          responseType: isDownload ? "arraybuffer" : null,
         })
 
         console.log("useAxios: response status ==================> ", status)
         console.log("useAxios: response data ==================> ", data)
-
-        // switch (typeof data) {
-        //   case "object":
-        //     applyData?.(data)
-        //     break
-
-        //   default:
-        //     console.log(
-        //       "HOOK: ====================> Response data is not an object"
-        //     )
-
-        //     dispatch(
-        //       ERROR_ACTIONS.update({
-        //         status: status,
-        //         message: "Bad response from server",
-        //       })
-        //     )
-        //     break
-        // }
 
         applyData?.(data)
       } catch (error) {
@@ -89,24 +65,12 @@ const useAxios = () => {
             "useAxios: error response data ==================> ",
             error.response?.data
           )
-
-          if (error.response?.status === 401) {
-            dispatch(AUTH_ACTIONS.logout())
-          } else if (error.response?.status && error.response?.data) {
-            dispatch(
-              ERROR_ACTIONS.update({
-                status: error.response.status,
-                message: error.response.data?.message,
-              })
-            )
-          }
         }
       }
 
       setIsLoading(false)
-      dispatch(FILE_ACTIONS.updateLoading(false))
     },
-    [dispatch, token]
+    [token]
   )
 
   return { isLoading, sendRequest }

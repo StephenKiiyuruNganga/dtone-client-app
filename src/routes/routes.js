@@ -1,17 +1,17 @@
-import Layout from "../layouts/CenterLayout"
+import Center from "../layouts/Center"
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 
 const routes = [
   {
     path: "/login",
-    layout: <Layout />,
+    layout: <Center />,
     content: <Login />,
     protected: false,
   },
   {
     path: "/",
-    layout: <Layout />,
+    layout: <Center />,
     content: <Home />,
     protected: true,
   },
